@@ -168,7 +168,8 @@ _run_mksquashfs() {
     local mksquashfs_options=() image_path="${isofs_dir}/${install_dir}/${arch}/airootfs.sfs"
     rm -f -- "${image_path}"
     [[ ! "${quiet}" == "y" ]] || mksquashfs_options+=('-no-progress' '-quiet')
-    mksquashfs "$@" "${image_path}" -noappend "${airootfs_image_tool_options[@]}" "${mksquashfs_options[@]}"
+    mksquashfs "$@" "${image_path}" -noappend "${airootfs_image_tool_options[@]}" "${mksquashfs_options[@]}" \
+        -action "uncompressed @ (name(*.gz) || name(*.png) || name(*.xz) || name(*.zst))"
 }
 
 # Create an ext4 image containing the root file system and pack it inside a squashfs image.
